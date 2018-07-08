@@ -54,6 +54,24 @@ app.get('/', async (req, res) => {
     res.write(html);
     res.end();
 
+});
+app.get('/gal_enai', async (req, res) => {
+    const dirTree = require('directory-tree');
+    const filteredTree = dirTree('./ginzburg_books');
+    let html = '<style>#tree{min-width: 30%;} .name{cursor: pointer;} body{direction: rtl} #content{    flex: 1 1 auto;} .wrapper{ display: flex; }</style><div class="wrapper"><div id="tree">';
+    try {
+        html += await getList(filteredTree);
+
+    } catch (e) {
+        console.log(e);
+    }
+    html += '</div>';
+    html += "<div style='position: relative'><div id='content' style='position: fixed; top:0;max-height: 100%; overflow-y: scroll;'>content</div></div></div><script>document.addEventListener('click',(e)=>{ const target = e.target; if(!target.classList.contains('name')) {return;} const content = target.nextSibling.innerHTML; if(content){ document.getElementById('content').innerHTML = content; } });</script>";
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(html);
+    res.end();
+
 })
 
 app.listen(3001, () => console.log('Example app listening on port 3001!'))
