@@ -58,8 +58,8 @@ app.get('/', async (req, res) => {
 app.get('/gal_enai', async (req, res) => {
     const dirTree = require('directory-tree');
     const filteredTree = dirTree('./ginzburg_books');
-    let html = '<!DOCTYPE html><html><body>';
-    html = '<!DOCTYPE html><html><body><style>#tree{min-width: 30%;} .name{cursor: pointer;} body{direction: rtl} #content{    flex: 1 1 auto;} .wrapper{ display: flex; }</style><div class="wrapper"><div id="tree">';
+    let html = '<!DOCTYPE html><html><head><meta http-equiv="Content-type" content="text/html; charset=utf-8"></head><body>';
+    html = '<style>#tree{min-width: 30%;} .name{cursor: pointer;} body{direction: rtl} #content{    flex: 1 1 auto;} .wrapper{ display: flex; }</style><div class="wrapper"><div id="tree">';
     try {
         html += await getList(filteredTree);
 
