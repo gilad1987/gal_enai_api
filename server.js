@@ -15,11 +15,13 @@ async function getList(parent) {
                 ul += `<li><div>${child.name == parent.name ? '' : child.name}</div>${_ul}</li>`;
             }
             let htmlPage;
-            if (child.type === 'file') {
+            if (child.type === 'file' && child.name!=='.DS_Store') {
                 try {
                     htmlPage = await mammoth.convertToHtml({path: child.path});
                 } catch (e) {
                     console.log(child.path);
+                    console.log("==========");
+                    console.log(child);
                     console.log("==========");
                     console.log(e);
                 }
@@ -49,7 +51,7 @@ app.get('/', async (req, res) => {
         console.log(e);
     }
     html += '</div>';
-    html += "<div style='position: relative'><div id='content' style='position: fixed; top:0;max-height: 100%; overflow-y: scroll;'>content</div></div></div><script>document.addEventListener('click',(e)=>{ const target = e.target; if(!target.classList.contains('name')) {return;} const content = target.nextSibling.innerHTML; if(content){ document.getElementById('content').innerHTML = content; } });</script>";
+    html += "<div style='position: relative'><div id='content' style='max-width: 600px; top:0;max-height: 100%; overflow-y: scroll;'>content</div></div></div><script>document.addEventListener('click',(e)=>{ const target = e.target; if(!target.classList.contains('name')) {return;} const content = target.nextSibling.innerHTML; if(content){ document.getElementById('content').innerHTML = content; } });</script>";
 
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.write(html);
@@ -68,7 +70,7 @@ app.get('/gal_enai', async (req, res) => {
         console.log(e);
     }
     html += '</div>';
-    html += "<div style='position: relative'><div id='content' style='position: fixed; top:0;max-height: 100%; overflow-y: scroll;'>content</div></div></div><script>document.addEventListener('click',(e)=>{ const target = e.target; if(!target.classList.contains('name')) {return;} const content = target.nextSibling.innerHTML; if(content){ document.getElementById('content').innerHTML = content; } });</script>";
+    html += "<div style='position: relative'><div id='content' style='max-width: 600px; top:0;max-height: 100%; overflow-y: scroll;'>content</div></div></div><script>document.addEventListener('click',(e)=>{ const target = e.target; if(!target.classList.contains('name')) {return;} const content = target.nextSibling.innerHTML; if(content){ document.getElementById('content').innerHTML = content; } });</script>";
 
     html+="</body></html>";
     res.writeHead(200, {'Content-Type': 'text/html'});
